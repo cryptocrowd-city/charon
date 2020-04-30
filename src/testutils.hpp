@@ -59,6 +59,11 @@ struct TestAccount
 extern const TestAccount ACCOUNTS[2];
 
 /**
+ * Returns the filename to the root CA certificate for the test server.
+ */
+std::string GetTestCA ();
+
+/**
  * Constructs the JID for a test account, without resource.
  */
 gloox::JID JIDWithoutResource (const TestAccount& acc);

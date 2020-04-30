@@ -1,6 +1,6 @@
 /*
     Charon - a transport system for GSP data
-    Copyright (C) 2019  Autonomous Worlds Ltd
+    Copyright (C) 2019-2020  Autonomous Worlds Ltd
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -106,6 +106,11 @@ public:
   XmppClient () = delete;
   XmppClient (const XmppClient&) = delete;
   void operator= (const XmppClient&) = delete;
+
+  /**
+   * Sets the root CA certificate to use for TLS verification.
+   */
+  void SetRootCA (const std::string& path);
 
   /**
    * Adds a pubsub handler for the given pubsub service JID.

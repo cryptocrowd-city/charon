@@ -23,13 +23,18 @@
 
 #include <glog/logging.h>
 
+#include <experimental/filesystem>
+
 #include <chrono>
+#include <cstdlib>
 #include <sstream>
 
 using testing::IsEmpty;
 
 namespace charon
 {
+
+namespace fs = std::experimental::filesystem;
 
 /* ************************************************************************** */
 
@@ -55,6 +60,16 @@ const TestAccount ACCOUNTS[] =
       "x8OG6xtFjCUMLh/AGA==",
     },
   };
+
+std::string
+GetTestCA ()
+{
+  const char* top = std::getenv ("top_srcdir");
+  if (top == nullptr)
+    top = "..";
+
+  return fs::path (top) / "data" / "letsencrypt.pem";
+}
 
 gloox::JID
 JIDWithoutResource (const TestAccount& acc)

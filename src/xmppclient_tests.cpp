@@ -62,6 +62,7 @@ public:
   explicit TestXmppClient (const TestAccount& acc)
     : XmppClient(JIDWithoutResource (acc), acc.password)
   {
+    SetRootCA (GetTestCA ());
     RunWithClient ([this] (gloox::Client& c)
       {
         c.registerMessageHandler (this);

@@ -1,6 +1,6 @@
 /*
     Charon - a transport system for GSP data
-    Copyright (C) 2019  Autonomous Worlds Ltd
+    Copyright (C) 2019-2020  Autonomous Worlds Ltd
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,6 +60,13 @@ XmppClient::~XmppClient ()
 
   if (recvLoop != nullptr)
     Disconnect ();
+}
+
+void
+XmppClient::SetRootCA (const std::string& path)
+{
+  LOG (INFO) << "Using root CA: " << path;
+  client.setCACerts ({path});
 }
 
 void
@@ -179,10 +186,9 @@ XmppClient::onTLSConnect (const gloox::CertInfo& info)
       << "Server presented a certificate for " << info.server
       << " from " << info.issuer;
 
-  LOG_IF (WARNING, info.status != gloox::CertOk)
+  CHECK_EQ (info.status, gloox::CertOk)
       << "Certificate status is not ok: " << info.status;
-  LOG_IF (WARNING, !info.chain)
-      << "Certificate chain is invalid, accepting nevertheless";
+  CHECK (info.chain) << "Certificate chain is invalid";
 
   return true;
 }
